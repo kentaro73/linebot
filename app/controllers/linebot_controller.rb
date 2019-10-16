@@ -46,8 +46,7 @@ class LinebotController < ApplicationController
           when /.*(明後日|あさって).*/
             per06to12 = doc.elements[xpath + 'info[3]/rainfallchance/period[2]'].text
             per12to18 = doc.elements[xpath + 'info[3]/rainfallchance/period[3]'].text
-            per18to24 = doc.elements[xpath + 'info[3]/rainfallchance/period[4]']
-            .text
+            per18to24 = doc.elements[xpath + 'info[3]/rainfallchance/period[4]'].text
             if per06to12.to_i >= min_per || per12to18.to_i >= min_per || per18to24.to_i >= min_per
               push =
                 "明後日の天気だよね。\n何かあるのかな？\n明後日は雨が降りそう...\n当日の朝に雨が降りそうだったら教えるからね！"
@@ -80,14 +79,14 @@ class LinebotController < ApplicationController
                  " 雨が降っちゃったらごめんね(><)"].sample
               push = 
                 "今日の天気？\n今日は雨は降らなさそうだよ。\n#{word}"
-                end
+              end
             end
             # テキスト以外（画像等）のメッセージが送られた場合
           else
             push = "テキスト以外はわからないよ〜(;;)"
           end
           message = {
-            type: 'text'
+            type: 'text',
             text: push
           }
           client.reply_message(event['replyToken'], message)
@@ -104,16 +103,14 @@ class LinebotController < ApplicationController
         end
       }
       head :ok
-    end
-
-    private 
-
-    def client
-      @client ||= Line::Bot::Client.new { |config|
-        config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
-        config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
-      }
-    end
   end
 
+  private 
+
+  def client
+    @client ||= Line::Bot::Client.new { |config|
+      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+    }
+  end
 end

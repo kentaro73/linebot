@@ -20,7 +20,7 @@ class LinebotController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
           # ユーザーからテキスト形式のメッセージが送られてきた場合
-        when Line::Bot::Event::Message
+        when Line::Bot::Event::MessageType::Text
           # event.message['text']:ユーザーから送られたメッセージ
           input = event.message['text']
           url = "https://www.drk7.jp/weather/xml/13.xml"

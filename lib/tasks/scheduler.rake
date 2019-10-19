@@ -7,7 +7,7 @@ task :update_feed => :environment do
 
   client ||= Line::Bot::Client.new { |config| 
     config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
-    config.channel_token = ENV["LIME_CHANNEL_TOKEN"]
+    config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
   }
 
   # 使用したxmlデータ（毎日朝６時更新）:以下URLを入力すれば見ることができる
